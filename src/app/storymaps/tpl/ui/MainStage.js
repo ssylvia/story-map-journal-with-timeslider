@@ -16,7 +16,8 @@ define(["lib-build/tpl!./MainMediaContainerMap",
 		"dojo/topic",
 		"dojo/on",
 		"dojo/aspect",
-		"dojo/_base/lang"
+		"dojo/_base/lang",
+		"./TimeSlider"
 	], 
 	function(
 		mainMediaContainerMapTpl,
@@ -37,7 +38,8 @@ define(["lib-build/tpl!./MainMediaContainerMap",
 		topic,
 		on,
 		aspect,
-		lang
+		lang,
+		TimeSlider
 	){
 		return function MainStage(container, isInBuilder, mainView)
 		{
@@ -369,6 +371,11 @@ define(["lib-build/tpl!./MainMediaContainerMap",
 								if ( app.map.infoWindow ) {
 									$(app.map.infoWindow.domNode).addClass("light");
 									app.map.infoWindow.markerSymbol = new SimpleMarkerSymbol().setSize(0);
+								}
+
+								// TimeSlider
+								if (response.itemInfo.itemData.widgets && response.itemInfo.itemData.widgets.timeSlider){
+									app.map.timeSlider = new TimeSlider(app.map,response.itemInfo.itemData.widgets.timeSlider.properties);
 								}
 								
 								updateMainMediaMapsStep2(
