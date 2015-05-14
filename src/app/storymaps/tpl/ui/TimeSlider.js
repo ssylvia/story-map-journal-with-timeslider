@@ -2,11 +2,13 @@ define(["esri/dijit/TimeSlider",
 	"esri/TimeExtent",
 	"dojo/on",
 	"dojo/date/locale",
+	"dojo/topic",
 	"lib-build/css!./TimeSlider"
 	],function(EsriTimeSlider,
 		EsriTimeExtent,
 		on,
-		locale){
+		locale,
+		topic){
 		/**
 		* Time Slider
 		* @class Time Slider
@@ -75,6 +77,10 @@ define(["esri/dijit/TimeSlider",
 
 			timeDisplay.html(getTimeString(timeSlider.getCurrentTimeExtent()));
 			setLayout();
+
+			topic.subscribe("story-load-section", function(){
+				stopAnimation();
+			});
 
 			playButton.click(function(){
 				if ($(this).hasClass("paused")){
@@ -176,7 +182,7 @@ define(["esri/dijit/TimeSlider",
 				}
 				else{
 					datePattern = 'MMMM d, yyyy';
-					 timeString = formatDate(timeExtent.endTime, datePattern);
+					timeString = formatDate(timeExtent.endTime, datePattern);
 				}
 
 				return timeString;
